@@ -25,12 +25,6 @@ class BaseModel(object):
 		return f"[{self.__class__.__name__}] ({self.id}) {self.to_dict()}"
 
 
-		
-b = BaseModel()
-b.name = "Holberton"
-b.my_number = 89
-print(b.to_dict())
-print(b.id)
 
 
 
