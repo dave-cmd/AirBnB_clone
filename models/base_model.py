@@ -1,5 +1,6 @@
 import uuid
 import datetime
+from models import storage
 
 class BaseModel(object):
 	"""docstring for BaseModel"""
@@ -18,10 +19,11 @@ class BaseModel(object):
 				self.created_at = kwargs["created_at"]
 			elif "updated_at" in kwargs:
 				self.updated_at = kwargs["updated_at"]
+
 		else:
 			self.my_number = ""
 			self.name = ""
-			self.id = uuid.uuid4()
+			self.id = str(uuid.uuid4())
 			self.created_at = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%f')
 
 	def to_dict_(self):
@@ -32,10 +34,15 @@ class BaseModel(object):
 		return self.__dict__
 
 	def save(self):
-		self.updated_at = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%f') 
+		self.updated_at = datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%f')
+		storage.save()
+		storage.new(self)
+
 	def __str__(self):
 		return f"[{self.__class__.__name__}] ({self.id}) {self.to_dict()}"
 
+
+		
 
 
 
